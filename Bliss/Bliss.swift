@@ -108,7 +108,7 @@ public class Bliss {
 					switch menuController.theme.placement {
 					case .Bottom:
 						rootController.navigationBar.frame = CGRectMake(0, containerView.frame.size.height, rootController.navigationBar.frame.size.width, rootController.navigationBar.frame.size.height)
-						menuController.view.frame = CGRectMake(0, containerView.frame.size.height, containerView.frame.size.width, containerView.frame.size.height)
+						menuController.view.frame = CGRectMake(0, containerView.frame.size.height, containerView.frame.size.width, neededTableViewHeight)
 						break
 					case .Top:
 						rootController.navigationBar.frame = CGRectMake(0, -rootController.navigationBar.frame.size.height, rootController.navigationBar.frame.size.width, rootController.navigationBar.frame.size.height)
@@ -134,7 +134,7 @@ public class Bliss {
 							rootController.navigationBar.frame = CGRectMake(0, containerView.frame.size.height - Helpers.navigationBarHeight(self.theme) - neededTableViewHeight, rootController.navigationBar.frame.size.width, rootController.navigationBar.frame.size.height)
 							break
 						case .Top:
-							menuController.view.frame = CGRectMake(0, Helpers.navigationBarHeight(self.theme), containerView.frame.size.height, neededTableViewHeight)
+							menuController.view.frame = CGRectMake(0, Helpers.tableViewOffset(self.theme), containerView.frame.size.height, neededTableViewHeight)
 							rootController.navigationBar.frame = CGRectMake(0, 0, rootController.navigationBar.frame.size.width, rootController.navigationBar.frame.size.height)
 							break
 						}

@@ -381,9 +381,9 @@ public class Bliss {
 			
 			let item = self.items[indexPath.row]
 			
-			item.action()
-			
-			self.dismissViewControllerAnimated(true, completion: nil)
+			self.dismissViewControllerAnimated(true) { 
+				item.action()
+			}
 		}
 	}
 }

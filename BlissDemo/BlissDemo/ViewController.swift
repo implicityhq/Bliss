@@ -33,7 +33,9 @@ class ViewController: UIViewController {
 		
 		let controller = Bliss.Controller(items: [firstItem, secondItem], theme: theme)
 		controller.title = "Basic Bliss"
-		controller.navigationBar.tintColor = redColor
+		controller.navigationBar.tintColor = .whiteColor()
+		
+		controller.navigationBar.barTintColor = blueColor
 		
 		self.presentViewController(controller, animated: true, completion: nil)
 	}

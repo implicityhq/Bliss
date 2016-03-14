@@ -26,7 +26,7 @@ extension Bliss {
 		
 		class func tableViewOffset(theme: Bliss.Theme) -> CGFloat {
 			let navigationBarHeight = self.navigationBarHeight(theme)
-			return navigationBarHeight == 0 ? navigationBarHeight : navigationBarHeight + 1
+			return navigationBarHeight == 0 ? navigationBarHeight : navigationBarHeight
 		}
 	}
 }

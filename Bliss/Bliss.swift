@@ -205,9 +205,6 @@ public class Bliss {
 		}
 		
 		func setupViews() {
-			self.navigationBar.frame = CGRectMake(0, 0, self.view.frame.size.width, Helpers.navigationBarHeight(self.theme))
-			self.view.addSubview(self.navigationBar)
-			
 			self.addChildViewController(self.tableViewController)
 			
 			self.tableViewController.tableView.frame = self.tableViewController.view.frame
@@ -215,6 +212,9 @@ public class Bliss {
 			self.view.addSubview(self.tableViewController.view)
 			
 			self.tableViewController.didMoveToParentViewController(self)
+			
+			self.navigationBar.frame = CGRectMake(0, 0, self.view.frame.size.width, Helpers.navigationBarHeight(self.theme))
+			self.view.addSubview(self.navigationBar)
 		}
 
 		public required init?(coder aDecoder: NSCoder) {

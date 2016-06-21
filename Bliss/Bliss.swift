@@ -176,7 +176,7 @@ public class Bliss {
 			didSet {
 				if let title = self.title {
 					let item = UINavigationItem(title: title)
-					item.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
+					item.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(Controller.dismiss))
 					
 					self.navigationBar.setItems([item], animated: true)
 				}
@@ -216,7 +216,7 @@ public class Bliss {
 			self.navigationBar.frame = CGRectMake(0, 0, self.view.frame.size.width, Helpers.navigationBarHeight(self.theme))
 			self.view.addSubview(self.navigationBar)
 			
-			self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dismiss"))
+			self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Controller.dismiss)))
 		}
 
 		public required init?(coder aDecoder: NSCoder) {

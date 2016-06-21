@@ -2,7 +2,7 @@
 
 Bliss is an easy way to present customizable menus in your iOS app.
 
-![](https://github.com/implicityhq/bliss/blob/master/Screenshots/combined.png)
+![](https://github.com/implicityhq/bliss/blob/master/Screenshots/combined.jpg)
 
 ## Installation
 Use Carthage to install Bliss.

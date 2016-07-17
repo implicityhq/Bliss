@@ -29,15 +29,15 @@ class ViewController: UIViewController {
 		
 		secondItem.image = UIImage(named: "closed")
 		
-		let theme = Bliss.Theme(placement: .Top)
+		let theme = Bliss.Theme(placement: .top)
 		
 		let controller = Bliss.Controller(items: [firstItem, secondItem], theme: theme)
 		controller.title = "Basic Bliss"
-		controller.navigationBar.tintColor = .whiteColor()
+		controller.navigationBar.tintColor = .white()
 		
 		controller.navigationBar.barTintColor = blueColor
 		
-		self.presentViewController(controller, animated: true, completion: nil)
+		self.present(controller, animated: true, completion: nil)
 	}
 	
 	@IBAction func showMediumDemo() {
@@ -49,16 +49,16 @@ class ViewController: UIViewController {
 			self.textLabel.text = "Medium Second"
 		}
 		
-		var theme = Bliss.Theme(placement: .Bottom)
+		var theme = Bliss.Theme(placement: .bottom)
 		theme.cellSelectedColor = redColor
 		theme.cellBackgroundColor = blueColor
-		theme.textColor = .whiteColor()
+		theme.textColor = .white()
 		
 		let controller = Bliss.Controller(items: [firstItem, secondItem], theme: theme)
 		controller.title = "Medium Bliss"
 		controller.navigationBar.tintColor = blueColor
 		
-		self.presentViewController(controller, animated: true, completion: nil)
+		self.present(controller, animated: true, completion: nil)
 	}
 
 }

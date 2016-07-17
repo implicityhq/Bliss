@@ -12,10 +12,10 @@ import UIKit
 
 extension Bliss {
 	class Helpers {
-		class func navigationBarHeight(theme: Bliss.Theme) -> CGFloat {
+		class func navigationBarHeight(_ theme: Bliss.Theme) -> CGFloat {
 			if !theme.barVisible {
 				return 0
-			} else if theme.statusBarVisible && theme.placement == .Top {
+			} else if theme.statusBarVisible && theme.placement == .top {
 				return Constants.navigationBarHeight + Constants.statusBarHeight
 			} else if theme.barVisible {
 				return Constants.navigationBarHeight
@@ -24,7 +24,7 @@ extension Bliss {
 			}
 		}
 		
-		class func tableViewOffset(theme: Bliss.Theme) -> CGFloat {
+		class func tableViewOffset(_ theme: Bliss.Theme) -> CGFloat {
 			let navigationBarHeight = self.navigationBarHeight(theme)
 			return navigationBarHeight == 0 ? navigationBarHeight : navigationBarHeight
 		}

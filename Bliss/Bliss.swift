@@ -25,28 +25,28 @@ public class Bliss {
 	}
 	
 	public enum Placement {
-		case Top
-		case Bottom
+		case top
+		case bottom
 	}
 	
 	public enum AnimationStyle {
-		case Slide
-		case Fade
+		case slide
+		case fade
 	}
 	
 	public struct Theme {
 		public var placement: Placement
-		public var animationStyle: AnimationStyle = .Slide
-		public var presentationTransitionDuration: NSTimeInterval = 0.55
-		public var dismissingTransitionDuration: NSTimeInterval = 0.35
-		public var textColor: UIColor = .blackColor()
-		public var cellBackgroundColor: UIColor = .whiteColor()
-		public var cellSelectedColor: UIColor = .lightGrayColor()
-		public var textAlignment: NSTextAlignment = .Left
+		public var animationStyle: AnimationStyle = .slide
+		public var presentationTransitionDuration: TimeInterval = 0.55
+		public var dismissingTransitionDuration: TimeInterval = 0.35
+		public var textColor: UIColor = .black()
+		public var cellBackgroundColor: UIColor = .white()
+		public var cellSelectedColor: UIColor = .lightGray()
+		public var textAlignment: NSTextAlignment = .left
 		public var barVisible: Bool = true
 		public var tableViewRowHeight: CGFloat = Constants.tableViewRowHeight
 		public var statusBarVisible: Bool = true
-		public var barStyle: UIBarStyle = .Black
+		public var barStyle: UIBarStyle = .black
 		
 		public init(placement: Placement) {
 			self.placement = placement
@@ -64,30 +64,30 @@ public class Bliss {
 			super.init()
 		}
 		
-		public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+		public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 			var rootController: Controller!
 			var ownerViewController: UIViewController!
 			
 			if !self.reverse {
-				rootController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as! Controller
-				ownerViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
+				rootController = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey) as! Controller
+				ownerViewController = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey)
 			} else {
-				rootController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! Controller
-				ownerViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+				rootController = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey) as! Controller
+				ownerViewController = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey)
 			}
 			
 			let menuController = rootController.tableViewController
 			
-			let containerView = transitionContext.containerView()!
+			let containerView = transitionContext.containerView()
 			
 			let overlayView = UIView(frame: containerView.frame)
 			overlayView.backgroundColor = UIColor(white: 0, alpha: 0.8)
 			overlayView.layer.opacity = 0.5
 			
 			if !self.reverse {
-				let ownerViewSnapshot = ownerViewController.view.snapshotViewAfterScreenUpdates(false)
+				let ownerViewSnapshot = ownerViewController.view.snapshotView(afterScreenUpdates: false)
 				
-				containerView.addSubview(ownerViewSnapshot)
+				containerView.addSubview(ownerViewSnapshot!)
 				
 				containerView.addSubview(overlayView)
 				
@@ -101,18 +101,18 @@ public class Bliss {
 				menuController.view.clipsToBounds = true
 				
 				switch self.theme.animationStyle {
-				case .Fade:
+				case .fade:
 					menuController.view.layer.opacity = 0
 					break
-				case .Slide:
+				case .slide:
 					switch menuController.theme.placement {
-					case .Bottom:
-						rootController.navigationBar.frame = CGRectMake(0, containerView.frame.size.height, rootController.navigationBar.frame.size.width, rootController.navigationBar.frame.size.height)
-						menuController.view.frame = CGRectMake(0, containerView.frame.size.height, containerView.frame.size.width, neededTableViewHeight)
+					case .bottom:
+						rootController.navigationBar.frame = CGRect(x: 0, y: containerView.frame.size.height, width: rootController.navigationBar.frame.size.width, height: rootController.navigationBar.frame.size.height)
+						menuController.view.frame = CGRect(x: 0, y: containerView.frame.size.height, width: containerView.frame.size.width, height: neededTableViewHeight)
 						break
-					case .Top:
-						rootController.navigationBar.frame = CGRectMake(0, -rootController.navigationBar.frame.size.height, rootController.navigationBar.frame.size.width, rootController.navigationBar.frame.size.height)
-						menuController.view.frame = CGRectMake(0, -neededTableViewHeight, containerView.frame.size.width, neededTableViewHeight)
+					case .top:
+						rootController.navigationBar.frame = CGRect(x: 0, y: -rootController.navigationBar.frame.size.height, width: rootController.navigationBar.frame.size.width, height: rootController.navigationBar.frame.size.height)
+						menuController.view.frame = CGRect(x: 0, y: -neededTableViewHeight, width: containerView.frame.size.width, height: neededTableViewHeight)
 						break
 					}
 					break
@@ -120,22 +120,22 @@ public class Bliss {
 			}
 			
 			if !self.reverse {
-				UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.25, options: [], animations: { () in
+				UIView.animate(withDuration: self.transitionDuration(using: transitionContext), delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.25, options: [], animations: { () in
 					overlayView.layer.opacity = 1
 
 					switch self.theme.animationStyle {
-					case .Fade:
+					case .fade:
 						menuController.view.layer.opacity = 1
 						break
-					case .Slide:
+					case .slide:
 						switch menuController.theme.placement {
-						case .Bottom:
-							menuController.view.frame = CGRectMake(0, containerView.frame.size.height - neededTableViewHeight, containerView.frame.size.height, neededTableViewHeight)
-							rootController.navigationBar.frame = CGRectMake(0, containerView.frame.size.height - Helpers.navigationBarHeight(self.theme) - neededTableViewHeight, rootController.navigationBar.frame.size.width, rootController.navigationBar.frame.size.height)
+						case .bottom:
+							menuController.view.frame = CGRect(x: 0, y: containerView.frame.size.height - neededTableViewHeight, width: containerView.frame.size.height, height: neededTableViewHeight)
+							rootController.navigationBar.frame = CGRect(x: 0, y: containerView.frame.size.height - Helpers.navigationBarHeight(self.theme) - neededTableViewHeight, width: rootController.navigationBar.frame.size.width, height: rootController.navigationBar.frame.size.height)
 							break
-						case .Top:
-							menuController.view.frame = CGRectMake(0, Helpers.tableViewOffset(self.theme), containerView.frame.size.height, neededTableViewHeight)
-							rootController.navigationBar.frame = CGRectMake(0, 0, rootController.navigationBar.frame.size.width, rootController.navigationBar.frame.size.height)
+						case .top:
+							menuController.view.frame = CGRect(x: 0, y: Helpers.tableViewOffset(self.theme), width: containerView.frame.size.height, height: neededTableViewHeight)
+							rootController.navigationBar.frame = CGRect(x: 0, y: 0, width: rootController.navigationBar.frame.size.width, height: rootController.navigationBar.frame.size.height)
 							break
 						}
 						break
@@ -145,7 +145,7 @@ public class Bliss {
 					transitionContext.completeTransition(ready)
 				})
 			} else {
-				UIView.animateWithDuration(self.transitionDuration(transitionContext), animations: {
+				UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
 					containerView.layer.opacity = 0
 				}, completion: { (ready) in
 					transitionContext.completeTransition(ready)
@@ -153,7 +153,7 @@ public class Bliss {
 			}
 		}
 		
-		public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+		public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
 			return self.reverse ? self.theme.dismissingTransitionDuration : self.theme.presentationTransitionDuration
 		}
 	}
@@ -176,7 +176,7 @@ public class Bliss {
 			didSet {
 				if let title = self.title {
 					let item = UINavigationItem(title: title)
-					item.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(Controller.dismiss))
+					item.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(Controller.dismissController))
 					
 					self.navigationBar.setItems([item], animated: true)
 				}
@@ -199,7 +199,7 @@ public class Bliss {
 			super.init(nibName: nil, bundle: nil)
 			
 			self.transitioningDelegate = self
-			self.modalPresentationStyle = .Custom
+			self.modalPresentationStyle = .custom
 			
 			self.setupViews()
 		}
@@ -211,12 +211,12 @@ public class Bliss {
 			
 			self.view.addSubview(self.tableViewController.view)
 			
-			self.tableViewController.didMoveToParentViewController(self)
+			self.tableViewController.didMove(toParentViewController: self)
 			
-			self.navigationBar.frame = CGRectMake(0, 0, self.view.frame.size.width, Helpers.navigationBarHeight(self.theme))
+			self.navigationBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: Helpers.navigationBarHeight(self.theme))
 			self.view.addSubview(self.navigationBar)
 			
-			self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Controller.dismiss)))
+			self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Controller.dismissController)))
 		}
 
 		public required init?(coder aDecoder: NSCoder) {
@@ -230,17 +230,17 @@ public class Bliss {
 		}
 		
 		public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-			if self.theme.barStyle == .Black {
-				return .LightContent
+			if self.theme.barStyle == .black {
+				return .lightContent
 			} else {
-				return .Default
+				return .default
 			}
 		}
 		
 		// MARK: Methods
 		
-		public func dismiss() {
-			self.dismissViewControllerAnimated(true) {
+		public func dismissController() {
+			self.dismiss(animated: true) {
 				if let cancelation = self.cancelationHandler {
 					cancelation()
 				}
@@ -249,11 +249,11 @@ public class Bliss {
 		
 		// MARK: Transitioning
 		
-		public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 			return TransitionAnimator(theme: self.theme)
 		}
 		
-		public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 			return TransitionAnimator(theme: self.theme, reverse: true)
 		}
 	}
@@ -281,7 +281,7 @@ public class Bliss {
 			self.theme = theme
 			self.navigationBar = navigationBar
 			
-			self.tableView = UITableView(frame: CGRect.zero, style: .Plain)
+			self.tableView = UITableView(frame: CGRect.zero, style: .plain)
 			
 			super.init(nibName: nil, bundle: nil)
 			
@@ -302,35 +302,35 @@ public class Bliss {
 			
 			self.tableView.tableFooterView = UIView()
 			
-			self.tableView.registerClass(Cell.self, forCellReuseIdentifier: "BlissCell")
+			self.tableView.register(Cell.self, forCellReuseIdentifier: "BlissCell")
 			
 			self.handleTheming()
 			
-			self.view.backgroundColor = .clearColor()
+			self.view.backgroundColor = .clear()
 			
-			self.tableView.scrollEnabled = false
+			self.tableView.isScrollEnabled = false
 			
 			let oldInsets = self.tableView.separatorInset
 			self.tableView.separatorInset = UIEdgeInsetsMake(oldInsets.top, oldInsets.left * 1.5, oldInsets.bottom, oldInsets.left * 1.5)
 		}
 		
 		func handleTheming() {
-			self.navigationBar.hidden = !self.theme.barVisible
+			self.navigationBar.isHidden = !self.theme.barVisible
 			
-			if self.theme.placement == .Bottom {
+			if self.theme.placement == .bottom {
 				let tableViewHeight = self.tableView.frame.size.height
 				let topMargin = self.view.frame.size.height - tableViewHeight - Helpers.navigationBarHeight(self.theme)
 				
 				let tableViewRect = self.tableView.frame
-				self.tableView.frame = CGRectMake(tableViewRect.origin.x, topMargin, tableViewRect.size.width, tableViewRect.size.height)
+				self.tableView.frame = CGRect(x: tableViewRect.origin.x, y: topMargin, width: tableViewRect.size.width, height: tableViewRect.size.height)
 			}
 			
 			self.tableView.rowHeight = self.theme.tableViewRowHeight
 			
 			self.navigationBar.barStyle = self.theme.barStyle
 			
-			if self.theme.barStyle == .Black {
-				self.navigationBar.translucent = false
+			if self.theme.barStyle == .black {
+				self.navigationBar.isTranslucent = false
 			}
 		}
 		
@@ -339,22 +339,22 @@ public class Bliss {
 		}
 		
 		override func preferredStatusBarStyle() -> UIStatusBarStyle {
-			if self.theme.barStyle == .Black {
-				return .LightContent
+			if self.theme.barStyle == .black {
+				return .lightContent
 			} else {
-				return .Default
+				return .default
 			}
 		}
 		
 		// MARK: Table View
 		
-		func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 			return self.items.count
 		}
 		
-		func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-			let cell = tableView.dequeueReusableCellWithIdentifier("BlissCell", forIndexPath: indexPath)
-			let item = self.items[indexPath.row]
+		func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "BlissCell", for: indexPath)
+			let item = self.items[(indexPath as NSIndexPath).row]
 			
 			cell.textLabel!.text = item.displayName
 			
@@ -372,18 +372,18 @@ public class Bliss {
 			if let image = item.image {
 				cell.accessoryView = UIImageView(image: image)
 				let size = tableView.rowHeight - tableView.contentInset.top - tableView.contentInset.bottom
-				cell.accessoryView?.frame = CGRectMake(0, 0, size, size)
+				cell.accessoryView?.frame = CGRect(x: 0, y: 0, width: size, height: size)
 			}
 			
 			return cell
 		}
 		
-		func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-			tableView.deselectRowAtIndexPath(indexPath, animated: true)
+		func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+			tableView.deselectRow(at: indexPath, animated: true)
 			
-			let item = self.items[indexPath.row]
+			let item = self.items[(indexPath as NSIndexPath).row]
 			
-			self.dismissViewControllerAnimated(true) { 
+			self.dismiss(animated: true) { 
 				item.action()
 			}
 		}

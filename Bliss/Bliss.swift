@@ -216,7 +216,7 @@ public class Bliss {
 			self.navigationBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: Helpers.navigationBarHeight(self.theme))
 			self.view.addSubview(self.navigationBar)
 			
-			self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Controller.dismissController)))
+//			self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Controller.dismissController)))
 		}
 
 		public required init?(coder aDecoder: NSCoder) {

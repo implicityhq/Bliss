@@ -78,7 +78,7 @@ public class Bliss {
 			
 			let menuController = rootController.tableViewController
 			
-			let containerView = transitionContext.containerView()!
+			let containerView = transitionContext.containerView()
 			
 			let overlayView = UIView(frame: containerView.frame)
 			overlayView.backgroundColor = UIColor(white: 0, alpha: 0.8)
@@ -87,7 +87,7 @@ public class Bliss {
 			if !self.reverse {
 				let ownerViewSnapshot = ownerViewController.view.snapshotViewAfterScreenUpdates(false)
 				
-				containerView.addSubview(ownerViewSnapshot)
+				containerView.addSubview(ownerViewSnapshot!)
 				
 				containerView.addSubview(overlayView)
 				

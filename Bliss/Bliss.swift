@@ -18,7 +18,7 @@ public class Bliss {
 		
 		public let action: () -> Void
 		
-		public init(displayName: String, action: () -> Void) {
+		public init(displayName: String, action: @escaping () -> Void) {
 			self.displayName = displayName
 			self.action = action
 		}
@@ -39,9 +39,9 @@ public class Bliss {
 		public var animationStyle: AnimationStyle = .slide
 		public var presentationTransitionDuration: TimeInterval = 0.55
 		public var dismissingTransitionDuration: TimeInterval = 0.35
-		public var textColor: UIColor = .black()
-		public var cellBackgroundColor: UIColor = .white()
-		public var cellSelectedColor: UIColor = .lightGray()
+		public var textColor: UIColor = .black
+		public var cellBackgroundColor: UIColor = .white
+		public var cellSelectedColor: UIColor = .lightGray
 		public var textAlignment: NSTextAlignment = .left
 		public var barVisible: Bool = true
 		public var tableViewRowHeight: CGFloat = Constants.tableViewRowHeight
@@ -69,16 +69,16 @@ public class Bliss {
 			var ownerViewController: UIViewController!
 			
 			if !self.reverse {
-				rootController = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey) as! Controller
-				ownerViewController = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey)
+				rootController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! Controller
+				ownerViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
 			} else {
-				rootController = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey) as! Controller
-				ownerViewController = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey)
+				rootController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! Controller
+				ownerViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
 			}
 			
 			let menuController = rootController.tableViewController
 			
-			let containerView = transitionContext.containerView()
+			let containerView = transitionContext.containerView
 			
 			let overlayView = UIView(frame: containerView.frame)
 			overlayView.backgroundColor = UIColor(white: 0, alpha: 0.8)
@@ -225,15 +225,19 @@ public class Bliss {
 		
 		// MARK: Status Bar
 		
-		public override func prefersStatusBarHidden() -> Bool {
-			return !self.theme.statusBarVisible
+		public override var prefersStatusBarHidden: Bool {
+			get {
+				return !self.theme.statusBarVisible
+			}
 		}
 		
-		public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-			if self.theme.barStyle == .black {
-				return .lightContent
-			} else {
-				return .default
+		public override var preferredStatusBarStyle: UIStatusBarStyle {
+			get {
+				if self.theme.barStyle == .black {
+					return .lightContent
+				} else {
+					return .default
+				}
 			}
 		}
 		
@@ -306,7 +310,7 @@ public class Bliss {
 			
 			self.handleTheming()
 			
-			self.view.backgroundColor = .clear()
+			self.view.backgroundColor = .clear
 			
 			self.tableView.isScrollEnabled = false
 			
@@ -334,15 +338,21 @@ public class Bliss {
 			}
 		}
 		
-		override func prefersStatusBarHidden() -> Bool {
-			return !self.theme.statusBarVisible
+		// MARK: Status Bar
+		
+		public override var prefersStatusBarHidden: Bool {
+			get {
+				return !self.theme.statusBarVisible
+			}
 		}
 		
-		override func preferredStatusBarStyle() -> UIStatusBarStyle {
-			if self.theme.barStyle == .black {
-				return .lightContent
-			} else {
-				return .default
+		public override var preferredStatusBarStyle: UIStatusBarStyle {
+			get {
+				if self.theme.barStyle == .black {
+					return .lightContent
+				} else {
+					return .default
+				}
 			}
 		}
 		

@@ -33,7 +33,7 @@ class ViewController: UIViewController {
 		
 		let controller = Bliss.Controller(items: [firstItem, secondItem], theme: theme)
 		controller.title = "Basic Bliss"
-		controller.navigationBar.tintColor = .white()
+		controller.navigationBar.tintColor = .white
 		
 		controller.navigationBar.barTintColor = blueColor
 		
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
 		var theme = Bliss.Theme(placement: .bottom)
 		theme.cellSelectedColor = redColor
 		theme.cellBackgroundColor = blueColor
-		theme.textColor = .white()
+		theme.textColor = .white
 		
 		let controller = Bliss.Controller(items: [firstItem, secondItem], theme: theme)
 		controller.title = "Medium Bliss"
